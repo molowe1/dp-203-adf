@@ -376,7 +376,7 @@
 				"typeProperties": {
 					"variableName": "CompanyName",
 					"value": {
-						"value": "@activity('Storedprocedurecustlookup').output.firstRow.CompanyName",
+						"value": "@activity('Storedprocedurecustlookup').output?.firstRow.CompanyName",
 						"type": "Expression"
 					}
 				}
@@ -384,6 +384,8 @@
 			{
 				"name": "SetSalesPersonVar",
 				"type": "SetVariable",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "Storedprocedurecustlookup",
