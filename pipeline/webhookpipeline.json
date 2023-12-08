@@ -113,7 +113,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"variableName": "webhookvar",
-					"value": "@{activity('Webhook').output.value[0]}"
+					"value": "@{activity('Webhookvar').output.value[0]}"
 				}
 			}
 		],
