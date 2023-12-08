@@ -2004,7 +2004,7 @@
 								"type": "DatasetReference",
 								"parameters": {}
 							},
-							"firstRowOnly": true
+							"firstRowOnly": false
 						}
 					},
 					{
@@ -2026,7 +2026,7 @@
 						"typeProperties": {
 							"variableName": "CompanyName",
 							"value": {
-								"value": "@activity('Storedprocedurecustlookup').output.firstRow.CompanyName",
+								"value": "@activity('Storedprocedurecustlookup').output?.firstRow.CompanyName",
 								"type": "Expression"
 							}
 						}
@@ -2034,8 +2034,6 @@
 					{
 						"name": "SetSalesPersonVar",
 						"type": "SetVariable",
-						"state": "Inactive",
-						"onInactiveMarkAs": "Succeeded",
 						"dependsOn": [
 							{
 								"activity": "Lookup1",
@@ -2052,7 +2050,7 @@
 						"typeProperties": {
 							"variableName": "SalesPerson",
 							"value": {
-								"value": "@activity('Storedprocedurecustlookup').output.firstRow.SalesPerson",
+								"value": "@activity('Storedprocedurecustlookup').output['firstRow'].SalesPerson",
 								"type": "Expression"
 							}
 						}
