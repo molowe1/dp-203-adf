@@ -1584,7 +1584,7 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"variableName": "CompanyName",
+							"variableName": "CompanyNameVar",
 							"value": {
 								"value": "@activity('Storedprocedurecustlookup').output?.firstRow.CompanyName",
 								"type": "Expression"
@@ -1608,7 +1608,7 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"variableName": "SalesPerson",
+							"variableName": "SalesPersonVar",
 							"value": {
 								"value": "@activity('Storedprocedurecustlookup').output['firstRow'].SalesPerson",
 								"type": "Expression"
@@ -1620,10 +1620,10 @@
 					"elapsedTimeMetric": {}
 				},
 				"variables": {
-					"CompanyName": {
+					"CompanyNameVar": {
 						"type": "String"
 					},
-					"SalesPerson": {
+					"SalesPersonVar": {
 						"type": "String"
 					}
 				},
