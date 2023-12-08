@@ -35,7 +35,7 @@
 				}
 			},
 			{
-				"name": "GetMetadataJSON",
+				"name": "GetMetadata-JSON",
 				"type": "GetMetadata",
 				"dependsOn": [
 					{
@@ -76,11 +76,9 @@
 			{
 				"name": "GetMetadataParquet",
 				"type": "GetMetadata",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
-						"activity": "GetMetadataJSON",
+						"activity": "GetMetadata-JSON",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -95,7 +93,23 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"fieldList": []
+					"dataset": {
+						"referenceName": "LOGDATA_PARQUET",
+						"type": "DatasetReference"
+					},
+					"fieldList": [
+						"childItems",
+						"exists",
+						"itemName",
+						"lastModified"
+					],
+					"storeSettings": {
+						"type": "AzureBlobFSReadSettings",
+						"enablePartitionDiscovery": false
+					},
+					"formatSettings": {
+						"type": "ParquetReadSettings"
+					}
 				}
 			}
 		],
