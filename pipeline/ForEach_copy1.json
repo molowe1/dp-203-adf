@@ -354,7 +354,7 @@
 						"referenceName": "ForEachDim",
 						"type": "DatasetReference"
 					},
-					"firstRowOnly": false
+					"firstRowOnly": true
 				}
 			},
 			{
