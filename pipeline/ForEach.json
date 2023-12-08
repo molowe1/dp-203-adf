@@ -62,7 +62,13 @@
 							"inputs": [
 								{
 									"referenceName": "ForEachDimCust",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"filename": {
+											"value": "@item().Name",
+											"type": "Expression"
+										}
+									}
 								}
 							],
 							"outputs": [
