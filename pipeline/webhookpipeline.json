@@ -22,8 +22,6 @@
 			{
 				"name": "copywebfilecsv",
 				"type": "Copy",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "webhookvariable",
@@ -119,9 +117,6 @@
 		],
 		"variables": {
 			"webhookvar": {
-				"type": "String"
-			},
-			"var": {
 				"type": "String"
 			}
 		},
