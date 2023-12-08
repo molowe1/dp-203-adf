@@ -2026,7 +2026,7 @@
 						"typeProperties": {
 							"variableName": "CompanyName",
 							"value": {
-								"value": "@activity('Storedprocedurecustlookup').output.firstRow.CompanyName",
+								"value": "@activity('Storedprocedurecustlookup').output.first.CompanyName",
 								"type": "Expression"
 							}
 						}
@@ -2050,7 +2050,7 @@
 						"typeProperties": {
 							"variableName": "SalesVar",
 							"value": {
-								"value": "@activity('Storedprocedurecustlookup').output.firstRow.SalesVar",
+								"value": "@activity('Storedprocedurecustlookup').output.first.SalesVar",
 								"type": "Expression"
 							}
 						}
