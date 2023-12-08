@@ -15,7 +15,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"url": "https://datalakedemodp203.blob.core.windows.net/csv/Log.csv",
+					"url": "https://datalakedemodp203.blob.core.windows.net/csv/Customer/Customer02.csv",
 					"method": "GET"
 				}
 			},
