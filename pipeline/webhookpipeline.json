@@ -125,7 +125,7 @@
 				"typeProperties": {
 					"variableName": "webhookvar",
 					"value": {
-						"value": "{activity('Webhook').output.value[0]}\n\n",
+						"value": "@{activity('Webhook').output.value}",
 						"type": "Expression"
 					}
 				}
