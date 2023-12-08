@@ -1553,7 +1553,7 @@
 								"storedProcedureParameters": {
 									"CustomerID": {
 										"type": "Int32",
-										"value": "227"
+										"value": "277"
 									}
 								},
 								"queryTimeout": "02:00:00",
@@ -1586,7 +1586,7 @@
 						"typeProperties": {
 							"variableName": "CompanyNameVar",
 							"value": {
-								"value": "@activity('Storedprocedurecustlookup').output?.firstRow.CompanyName",
+								"value": "@activity('Storedprocedurecustlookup').output.firstRow.CompanyName",
 								"type": "Expression"
 							}
 						}
