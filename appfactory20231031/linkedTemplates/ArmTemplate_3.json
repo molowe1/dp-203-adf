@@ -13,6 +13,167 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/jsonarrayflow')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "arrajson",
+								"type": "DatasetReference"
+							},
+							"name": "jsonarraystream"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "customerjsonarraytable",
+								"type": "DatasetReference"
+							},
+							"name": "jsonarraysink"
+						}
+					],
+					"transformations": [
+						{
+							"name": "courseflatten"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          customerid as integer,",
+						"          customername as string,",
+						"          registered as boolean,",
+						"          courses as string[]",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false,",
+						"     documentForm: 'arrayOfDocuments') ~> jsonarraystream",
+						"jsonarraystream foldDown(unroll(courses, courses),",
+						"     mapColumn(",
+						"          custemerid = customerid,",
+						"          customername,",
+						"          registered,",
+						"          courses",
+						"     ),",
+						"     skipDuplicateMapInputs: false,",
+						"     skipDuplicateMapOutputs: false) ~> courseflatten",
+						"courseflatten sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          CustomerID as integer,",
+						"          CustomerName as string,",
+						"          Registered as boolean,",
+						"          Courses as string",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError',",
+						"     mapColumn(",
+						"          CustomerID = custemerid,",
+						"          CustomerName = customername,",
+						"          Registered = registered,",
+						"          Courses = courses",
+						"     )) ~> jsonarraysink"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/jsonobjectflow')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "objectjson",
+								"type": "DatasetReference"
+							},
+							"name": "jsonobjectstream"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "jsonobject_table",
+								"type": "DatasetReference"
+							},
+							"name": "jsonarraysink"
+						}
+					],
+					"transformations": [
+						{
+							"name": "detailflatten"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          customerid as integer,",
+						"          customername as string,",
+						"          registered as boolean,",
+						"          courses as string[],",
+						"          details as (mobile as string, city as string)",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false,",
+						"     documentForm: 'arrayOfDocuments') ~> jsonobjectstream",
+						"jsonobjectstream foldDown(unroll(courses, courses),",
+						"     mapColumn(",
+						"          customerid,",
+						"          customername,",
+						"          registered,",
+						"          courses,",
+						"          mobile = details.mobile,",
+						"          city = details.city",
+						"     ),",
+						"     skipDuplicateMapInputs: false,",
+						"     skipDuplicateMapOutputs: false) ~> detailflatten",
+						"detailflatten sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          CustomerID as integer,",
+						"          CustomerName as string,",
+						"          Registered as boolean,",
+						"          Courses as string,",
+						"          Mobile as string,",
+						"          City as string",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError',",
+						"     mapColumn(",
+						"          CustomerID = customerid,",
+						"          CustomerName = customername,",
+						"          Registered = registered,",
+						"          Courses = courses,",
+						"          Mobile = mobile,",
+						"          City = city",
+						"     )) ~> jsonarraysink"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/logdatafilter')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
@@ -619,7 +780,10 @@
 				"annotations": [],
 				"lastPublishTime": "2023-12-04T14:35:51Z"
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/jsonarrayflow')]",
+				"[concat(variables('factoryId'), '/dataflows/jsonobjectflow')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/convertandcopyjsonpipeline')]",
