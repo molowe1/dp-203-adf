@@ -20,7 +20,7 @@
 		},
 		"schema": [
 			{
-				"name": "1",
+				"name": "WebActvityOutput",
 				"type": "String"
 			}
 		]

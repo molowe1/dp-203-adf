@@ -45,7 +45,7 @@
 							{
 								"name": "WebActvityOutput",
 								"value": {
-									"value": "@{variables('webhookvar')}",
+									"value": "{variables('webhookvar')}",
 									"type": "Expression"
 								}
 							}
@@ -101,7 +101,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "webcsv",
+						"referenceName": "DelimitedText2",
 						"type": "DatasetReference"
 					}
 				]
@@ -123,17 +123,11 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"variableName": "pipelineReturnValue",
-					"value": [
-						{
-							"key": "webhookvar",
-							"value": {
-								"type": "String",
-								"content": "@{activity('Web1').output.value[0]}"
-							}
-						}
-					],
-					"setSystemVariable": true
+					"variableName": "webhookvar",
+					"value": {
+						"value": "{activity('Webhook').output.value[0]}\n\n",
+						"type": "Expression"
+					}
 				}
 			}
 		],
