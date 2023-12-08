@@ -356,8 +356,64 @@
 					},
 					"firstRowOnly": true
 				}
+			},
+			{
+				"name": "SetCompanyNameVar",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Storedprocedurecustlookup",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "CompanyName",
+					"value": {
+						"value": "@activity('Storedprocedurecustlookup').output.firstRow.CompanyName",
+						"type": "Expression"
+					}
+				}
+			},
+			{
+				"name": "SetSalesPersonVar",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Storedprocedurecustlookup",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "SalesVar",
+					"value": {
+						"value": "@activity('Storedprocedurecustlookup').output.firstRow.SalesVar",
+						"type": "Expression"
+					}
+				}
 			}
 		],
+		"variables": {
+			"CompanyName": {
+				"type": "String"
+			},
+			"SalesVar": {
+				"type": "String"
+			}
+		},
 		"annotations": []
 	}
 }
