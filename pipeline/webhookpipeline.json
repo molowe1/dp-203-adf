@@ -26,7 +26,7 @@
 				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
-						"activity": "Webhook",
+						"activity": "webhookvariable",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -41,10 +41,56 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
 					"enableStaging": false
+				},
+				"outputs": [
+					{
+						"referenceName": "webcsv",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "webhookvariable",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Webhook",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "webhookvar",
+					"value": "@{activity('Webhook').output.value[0]}"
 				}
 			}
 		],
+		"variables": {
+			"webhookvar": {
+				"type": "String"
+			},
+			"var": {
+				"type": "String"
+			}
+		},
 		"annotations": []
 	}
 }
