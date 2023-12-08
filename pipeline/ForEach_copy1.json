@@ -376,7 +376,7 @@
 				"typeProperties": {
 					"variableName": "CompanyName",
 					"value": {
-						"value": "@activity('Storedprocedurecustlookup').output.first.CompanyName",
+						"value": "@activity('Storedprocedurecustlookup').output.firstRow.CompanyName",
 						"type": "Expression"
 					}
 				}
@@ -398,9 +398,9 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"variableName": "SalesVar",
+					"variableName": "SalesPerson",
 					"value": {
-						"value": "@activity('Storedprocedurecustlookup').output.first.SalesVar",
+						"value": "@activity('Storedprocedurecustlookup').output.firstRow.SalesPerson",
 						"type": "Expression"
 					}
 				}
@@ -410,7 +410,7 @@
 			"CompanyName": {
 				"type": "String"
 			},
-			"SalesVar": {
+			"SalesPerson": {
 				"type": "String"
 			}
 		},
