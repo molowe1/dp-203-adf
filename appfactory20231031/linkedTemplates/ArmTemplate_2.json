@@ -25,6 +25,124 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/logdatajsontable')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "adf to db",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Correlationid",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Operationname",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Status",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Eventcategory",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Level",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Time",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Subscription",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Eventinitiatedby",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Resourcetype",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Resourcegroup",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Resource",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "logdatajsontable"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/objectjson')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "csv to ddb",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "customer_2.json",
+						"fileSystem": "json"
+					}
+				},
+				"schema": {
+					"type": "object",
+					"properties": {
+						"customerid": {
+							"type": "integer"
+						},
+						"customername": {
+							"type": "string"
+						},
+						"registered": {
+							"type": "boolean"
+						},
+						"courses": {
+							"type": "array",
+							"items": {
+								"type": "string"
+							}
+						},
+						"details": {
+							"type": "object",
+							"properties": {
+								"mobile": {
+									"type": "string"
+								},
+								"city": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/partitiontable')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -335,7 +453,7 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/AzureSqlTable4')]",
+			"name": "[concat(parameters('factoryName'), '/ForEachDim')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -353,7 +471,7 @@
 					},
 					{
 						"name": "NameStyle",
-						"type": "bit"
+						"type": "nvarchar"
 					},
 					{
 						"name": "Title",
@@ -406,100 +524,8 @@
 				],
 				"typeProperties": {
 					"schema": "dbo",
-					"table": "ForEachCustomer"
+					"table": "DimForEachCustomer"
 				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DelimitedText')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "csv to ddb",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"filename": {
-						"type": "string"
-					}
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": {
-							"value": "@dataset().filename",
-							"type": "Expression"
-						},
-						"folderPath": "Customer",
-						"fileSystem": "csv"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "CustomerID",
-						"type": "String"
-					},
-					{
-						"name": "NameStyle",
-						"type": "String"
-					},
-					{
-						"name": "Title",
-						"type": "String"
-					},
-					{
-						"name": "FirstName",
-						"type": "String"
-					},
-					{
-						"name": "MiddleName",
-						"type": "String"
-					},
-					{
-						"name": "LastName",
-						"type": "String"
-					},
-					{
-						"name": "Suffix",
-						"type": "String"
-					},
-					{
-						"name": "CompanyName",
-						"type": "String"
-					},
-					{
-						"name": "SalesPerson",
-						"type": "String"
-					},
-					{
-						"name": "EmailAddress",
-						"type": "String"
-					},
-					{
-						"name": "Phone",
-						"type": "String"
-					},
-					{
-						"name": "PasswordHash",
-						"type": "String"
-					},
-					{
-						"name": "PasswordSalt",
-						"type": "String"
-					},
-					{
-						"name": "rowguid",
-						"type": "String"
-					}
-				]
 			},
 			"dependsOn": []
 		},
@@ -1647,10 +1673,7 @@
 				},
 				"annotations": []
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/DelimitedText')]",
-				"[concat(variables('factoryId'), '/datasets/AzureSqlTable4')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/addCol pipeline')]",
@@ -2958,128 +2981,6 @@
 				"[concat(variables('factoryId'), '/datasets/salesorderdetalsLS')]",
 				"[concat(variables('factoryId'), '/datasets/salesorderheaderLS')]"
 			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/joinStream')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "DestinationDataset_90z",
-								"type": "DatasetReference"
-							},
-							"name": "logstream"
-						},
-						{
-							"dataset": {
-								"referenceName": "addedcol_join",
-								"type": "DatasetReference"
-							},
-							"name": "samplelog"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "afterjointable",
-								"type": "DatasetReference"
-							},
-							"name": "finaltable"
-						}
-					],
-					"transformations": [
-						{
-							"name": "rightjoinaddcol"
-						}
-					],
-					"scriptLines": [
-						"source(output(",
-						"          {Correlation id} as string,",
-						"          {Operation name} as string,",
-						"          Status as string,",
-						"          {Event category} as string,",
-						"          Level as string,",
-						"          Time as string,",
-						"          Subscription as string,",
-						"          {Event initiated by} as string,",
-						"          {Resource type} as string,",
-						"          {Resource group} as string,",
-						"          Resource as string",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> logstream",
-						"source(output(",
-						"          Correlationid as string,",
-						"          Operationname as string,",
-						"          Status as string,",
-						"          Eventcategory as string,",
-						"          Level as string,",
-						"          Time as timestamp,",
-						"          Subscription as string,",
-						"          Eventinitiatedby as string,",
-						"          Resourcetype as string,",
-						"          Resourcegroup as string,",
-						"          Resource as string,",
-						"          FilePath as string,",
-						"          RandomCol as string,",
-						"          FileName as string",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> samplelog",
-						"logstream, samplelog join({Correlation id} == Correlationid,",
-						"     joinType:'left',",
-						"     matchType:'exact',",
-						"     ignoreSpaces: false,",
-						"     broadcast: 'auto')~> rightjoinaddcol",
-						"rightjoinaddcol sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     format: 'table',",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError',",
-						"     mapColumn(",
-						"          {Correlation id},",
-						"          {Operation name},",
-						"          Status = logstream@Status,",
-						"          {Event category},",
-						"          Level = logstream@Level,",
-						"          Time = logstream@Time,",
-						"          Subscription = logstream@Subscription,",
-						"          {Event initiated by},",
-						"          {Resource type},",
-						"          {Resource group},",
-						"          Resource = logstream@Resource,",
-						"          Correlationid,",
-						"          Operationname,",
-						"          Status = samplelog@Status,",
-						"          Eventcategory,",
-						"          Level = samplelog@Level,",
-						"          Time = samplelog@Time,",
-						"          Subscription = samplelog@Subscription,",
-						"          Eventinitiatedby,",
-						"          Resourcetype,",
-						"          Resourcegroup,",
-						"          Resource = samplelog@Resource,",
-						"          FilePath,",
-						"          RandomCol,",
-						"          FileName",
-						"     )) ~> finaltable"
-					]
-				}
-			},
-			"dependsOn": []
 		}
 	]
 }
