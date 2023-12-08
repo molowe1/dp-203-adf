@@ -2117,8 +2117,6 @@
 					{
 						"name": "GetMetadataCSV",
 						"type": "GetMetadata",
-						"state": "Inactive",
-						"onInactiveMarkAs": "Succeeded",
 						"dependsOn": [],
 						"policy": {
 							"timeout": "0.12:00:00",
@@ -2129,14 +2127,29 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"fieldList": []
+							"dataset": {
+								"referenceName": "DelimitedText1",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"fieldList": [
+								"childItems",
+								"itemName",
+								"exists",
+								"lastModified"
+							],
+							"storeSettings": {
+								"type": "AzureBlobFSReadSettings",
+								"enablePartitionDiscovery": false
+							},
+							"formatSettings": {
+								"type": "DelimitedTextReadSettings"
+							}
 						}
 					},
 					{
-						"name": "GetMetadataParquet",
+						"name": "GetMetadata-JSON",
 						"type": "GetMetadata",
-						"state": "Inactive",
-						"onInactiveMarkAs": "Succeeded",
 						"dependsOn": [
 							{
 								"activity": "GetMetadataCSV",
@@ -2154,17 +2167,32 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"fieldList": []
+							"dataset": {
+								"referenceName": "arrajson",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"fieldList": [
+								"childItems",
+								"exists",
+								"itemName",
+								"lastModified"
+							],
+							"storeSettings": {
+								"type": "AzureBlobFSReadSettings",
+								"enablePartitionDiscovery": false
+							},
+							"formatSettings": {
+								"type": "JsonReadSettings"
+							}
 						}
 					},
 					{
-						"name": "GetMetadataJSON",
+						"name": "GetMetadataParquet",
 						"type": "GetMetadata",
-						"state": "Inactive",
-						"onInactiveMarkAs": "Succeeded",
 						"dependsOn": [
 							{
-								"activity": "GetMetadataParquet",
+								"activity": "GetMetadata-JSON",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -2179,7 +2207,24 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"fieldList": []
+							"dataset": {
+								"referenceName": "LOGDATA_PARQUET",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"fieldList": [
+								"childItems",
+								"exists",
+								"itemName",
+								"lastModified"
+							],
+							"storeSettings": {
+								"type": "AzureBlobFSReadSettings",
+								"enablePartitionDiscovery": false
+							},
+							"formatSettings": {
+								"type": "ParquetReadSettings"
+							}
 						}
 					}
 				],
@@ -2188,7 +2233,11 @@
 				},
 				"annotations": []
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/DelimitedText1')]",
+				"[concat(variables('factoryId'), '/datasets/arrajson')]",
+				"[concat(variables('factoryId'), '/datasets/LOGDATA_PARQUET')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/vmpipeline')]",
@@ -2750,8 +2799,6 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
-						"fileName": "Customer01.csv",
-						"folderPath": "Customer",
 						"fileSystem": "csv"
 					},
 					"columnDelimiter": ",",
@@ -3060,7 +3107,6 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
-						"fileName": "Log.parquet",
 						"fileSystem": "parquet"
 					},
 					"compressionCodec": "snappy"
@@ -3708,7 +3754,6 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
-						"fileName": "customer_1.json",
 						"fileSystem": "json"
 					}
 				},
