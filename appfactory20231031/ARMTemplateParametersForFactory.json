@@ -1,0 +1,33 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "appfactory20231031"
+		},
+		"adf to db_connectionString": {
+			"value": ""
+		},
+		"appdblinkedservice_connectionString": {
+			"value": ""
+		},
+		"appvmserver_password": {
+			"value": ""
+		},
+		"csv to ddb_accountKey": {
+			"value": ""
+		},
+		"linkedService_Staging_connectionString": {
+			"value": ""
+		},
+		"appvmserver_properties_typeProperties_host": {
+			"value": "D:\\nginx-1.24.0\\logs"
+		},
+		"appvmserver_properties_typeProperties_userId": {
+			"value": "appuser"
+		},
+		"csv to ddb_properties_typeProperties_url": {
+			"value": "https://datalakedemodp203.dfs.core.windows.net/"
+		}
+	}
+}
