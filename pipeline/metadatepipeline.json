@@ -5,6 +5,8 @@
 			{
 				"name": "GetMetadataCSV",
 				"type": "GetMetadata",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -18,6 +20,8 @@
 			{
 				"name": "GetMetadataParquet",
 				"type": "GetMetadata",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "GetMetadataCSV",
@@ -38,6 +42,8 @@
 			{
 				"name": "GetMetadataJSON",
 				"type": "GetMetadata",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "GetMetadataParquet",
