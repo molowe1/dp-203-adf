@@ -1564,7 +1564,7 @@
 								"type": "DatasetReference",
 								"parameters": {}
 							},
-							"firstRowOnly": true
+							"firstRowOnly": false
 						}
 					},
 					{
@@ -1572,7 +1572,7 @@
 						"type": "SetVariable",
 						"dependsOn": [
 							{
-								"activity": "Storedprocedurecustlookup",
+								"activity": "Lookup1",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -1586,7 +1586,7 @@
 						"typeProperties": {
 							"variableName": "CompanyName",
 							"value": {
-								"value": "@activity('Storedprocedurecustlookup').output?.firstRow.CompanyName",
+								"value": "@activity('Storedprocedurecustlookup').output.firstRow.CompanyName",
 								"type": "Expression"
 							}
 						}
@@ -1598,7 +1598,7 @@
 						"onInactiveMarkAs": "Succeeded",
 						"dependsOn": [
 							{
-								"activity": "Storedprocedurecustlookup",
+								"activity": "Lookup1",
 								"dependencyConditions": [
 									"Succeeded"
 								]
