@@ -21,7 +21,7 @@
 					},
 					"activities": [
 						{
-							"name": "eachcopyfile",
+							"name": "CopyEachdata",
 							"type": "Copy",
 							"dependsOn": [],
 							"policy": {
@@ -52,44 +52,6 @@
 								"enableStaging": false,
 								"translator": {
 									"type": "TabularTranslator",
-									"mappings": [
-										{
-											"source": {
-												"name": "CustomerID",
-												"type": "String",
-												"physicalType": "String"
-											},
-											"sink": {
-												"name": "CustomerID",
-												"type": "Int32",
-												"physicalType": "int"
-											}
-										},
-										{
-											"source": {
-												"name": "CompanyName",
-												"type": "String",
-												"physicalType": "String"
-											},
-											"sink": {
-												"name": "CompanyName",
-												"type": "String",
-												"physicalType": "varchar"
-											}
-										},
-										{
-											"source": {
-												"name": "SalesPerson",
-												"type": "String",
-												"physicalType": "String"
-											},
-											"sink": {
-												"name": "SalesPerson",
-												"type": "String",
-												"physicalType": "varchar"
-											}
-										}
-									],
 									"typeConversion": true,
 									"typeConversionSettings": {
 										"allowDataTruncation": true,
@@ -99,7 +61,7 @@
 							},
 							"inputs": [
 								{
-									"referenceName": "ForEachDimCust",
+									"referenceName": "DelimitedText",
 									"type": "DatasetReference",
 									"parameters": {
 										"filename": {
@@ -111,7 +73,7 @@
 							],
 							"outputs": [
 								{
-									"referenceName": "ForEachTable",
+									"referenceName": "AzureSqlTable4",
 									"type": "DatasetReference"
 								}
 							]
