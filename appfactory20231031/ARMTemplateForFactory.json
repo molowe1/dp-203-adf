@@ -6723,6 +6723,39 @@
 								"type": "DelimitedTextReadSettings"
 							}
 						}
+					},
+					{
+						"name": "Storedprocedurecustlookup",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "ForEachCustFile",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[GetCustomerDetails]",
+							"storedProcedureParameters": {
+								"CustomerID": {
+									"value": "277",
+									"type": "Int32"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "appdblinkedservice",
+							"type": "LinkedServiceReference"
+						}
 					}
 				],
 				"policy": {
@@ -6732,6 +6765,7 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/getcsvlist')]",
+				"[concat(variables('factoryId'), '/linkedServices/appdblinkedservice')]",
 				"[concat(variables('factoryId'), '/datasets/DelimitedText')]",
 				"[concat(variables('factoryId'), '/datasets/ForEachDim')]"
 			]
