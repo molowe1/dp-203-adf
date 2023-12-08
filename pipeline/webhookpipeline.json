@@ -123,8 +123,17 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"variableName": "webhookvar",
-					"value": "@{activity('Webhookvar').output.value[0]}"
+					"variableName": "pipelineReturnValue",
+					"value": [
+						{
+							"key": "webhookvar",
+							"value": {
+								"type": "String",
+								"content": "@{activity('Web1').output.value[0]}"
+							}
+						}
+					],
+					"setSystemVariable": true
 				}
 			}
 		],
