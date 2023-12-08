@@ -35,10 +35,8 @@
 				}
 			},
 			{
-				"name": "GetMetadataParquet",
+				"name": "GetMetadataJSON",
 				"type": "GetMetadata",
-				"state": "Inactive",
-				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
 						"activity": "GetMetadataCSV",
@@ -76,13 +74,13 @@
 				}
 			},
 			{
-				"name": "GetMetadataJSON",
+				"name": "GetMetadataParquet",
 				"type": "GetMetadata",
 				"state": "Inactive",
 				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [
 					{
-						"activity": "GetMetadataParquet",
+						"activity": "GetMetadataJSON",
 						"dependencyConditions": [
 							"Succeeded"
 						]
