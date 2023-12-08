@@ -1564,7 +1564,7 @@
 								"type": "DatasetReference",
 								"parameters": {}
 							},
-							"firstRowOnly": false
+							"firstRowOnly": true
 						}
 					},
 					{
