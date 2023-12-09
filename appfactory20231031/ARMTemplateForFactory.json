@@ -1212,8 +1212,6 @@
 					{
 						"name": "ForEachCustFile",
 						"type": "ForEach",
-						"state": "Inactive",
-						"onInactiveMarkAs": "Succeeded",
 						"dependsOn": [
 							{
 								"activity": "GetMetadata",
@@ -1464,8 +1462,6 @@
 					{
 						"name": "GetMetadata",
 						"type": "GetMetadata",
-						"state": "Inactive",
-						"onInactiveMarkAs": "Succeeded",
 						"dependsOn": [],
 						"policy": {
 							"timeout": "0.12:00:00",
