@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "ForEachCustFile",
+				"name": "ForEachAvroFile",
 				"type": "ForEach",
 				"dependsOn": [
 					{
