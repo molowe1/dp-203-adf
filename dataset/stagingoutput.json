@@ -1,0 +1,18 @@
+{
+	"name": "stagingoutput",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "dummystorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"container": "stagingoutput"
+			}
+		},
+		"schema": {}
+	}
+}
